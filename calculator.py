@@ -1,6 +1,6 @@
 import stck
 
-def isInt(e):   #Проверка на целое
+def isInt(e):
     try:
         int(e)
         return True
@@ -8,11 +8,11 @@ def isInt(e):   #Проверка на целое
         return False
 
 
-def isOp(e):    #Проверка на оператор
+def isOp(e):
     return "+-*/".find(e) != -1
 
 
-def pr(e):  #Приоритет операции
+def pr(e):
     priority = {'+' : 2,
             '-' : 2,
             '/' : 3,
@@ -20,7 +20,7 @@ def pr(e):  #Приоритет операции
     return priority[e]
 
 
-def operation(op, rnum, lnum):  #Арифметические операции между числами
+def operation(op, rnum, lnum):
     res = {
         '+': float(lnum) + float(rnum),
         '-': float(lnum) - float(rnum),
@@ -30,7 +30,7 @@ def operation(op, rnum, lnum):  #Арифметические операции �
     return res[op]
 
 
-def brackets(s):    #Проверка на равное количество откр. и закр. скобочек
+def brackets(s):
     l = 0
     r = 0
     for i in s:
@@ -56,15 +56,15 @@ class Calculator:
                 i += 1
                 continue
             if((isOp(inpStr[i]) or isInt(inpStr[i]) or inpStr[i] == '(' or inpStr[i] == ')') and brackets(inpStr)):
-                if(inpStr[i] == '-' and ((i > 0 and not isInt(inpStr[i-1]) and inpStr[i-1] != ')') or i == 0)): #Проверка на отрицательное число
+                if(inpStr[i] == '-' and ((i > 0 and not isInt(inpStr[i-1]) and inpStr[i-1] != ')') or i == 0)):
                     outStr += '-'
                     continue
-                if(isInt(inpStr[i])):   #Проверка на число
+                if(isInt(inpStr[i])):
                     outStr += inpStr[i]
                     continue
-                if(len(outStr) > 0 and outStr[len(outStr)-1] != ' '):  #Добавление пробела
+                if(len(outStr) > 0 and outStr[len(outStr)-1] != ' '):
                     outStr += ' '
-                if(isOp(inpStr[i])):    #Проверка на знак 
+                if(isOp(inpStr[i])):
                     if(stackOp.isEmpty() or stackOp.peek() == '('):
                         stackOp.push(inpStr[i])
                         continue
@@ -76,10 +76,10 @@ class Calculator:
                             outStr += stackOp.pop() + ' '
                         stackOp.push(inpStr[i])
                         continue
-                if(inpStr[i] == '('):   #Проверка на левую скобку
+                if(inpStr[i] == '('):
                     stackOp.push('(')
                     continue
-                if(inpStr[i] == ')'):   #Проверка на правую скобку
+                if(inpStr[i] == ')'):
                     while(stackOp.peek() != '('):
                         outStr += stackOp.pop() + ' '
                     stackOp.pop()
@@ -87,9 +87,9 @@ class Calculator:
                 outStr = ''
                 break
         if(len(outStr) > 0):
-                if(outStr[len(outStr)-1] != ' '):   #Добавление пробела
+                if(outStr[len(outStr)-1] != ' '):
                     outStr += ' '
-                while(not stackOp.isEmpty()):   #Вывод знаков из стека в строку
+                while(not stackOp.isEmpty()):
                     outStr += stackOp.pop() + ' '
         return outStr
 
